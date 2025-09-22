@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard PPDB</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center p-6">
+
+  <div class="grid gap-6 lg:grid-cols-2 w-full max-w-6xl">
+
+    <!-- Card Besar: Informasi Data Siswa -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+      <h2 class="text-center text-base font-bold mb-4">Informasi Data Siswa</h2>
+      <div class="grid grid-cols-2 gap-4">
+
+        <!-- Sudah Mendaftar -->
+        <a href="siswa_terdaftar.php"
+          class="group bg-blue-100 dark:bg-blue-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
+          <i data-lucide="user-plus" class="w-6 h-6 mx-auto mb-2 text-blue-700 dark:text-blue-200"></i>
+          <h3 class="text-sm font-bold text-blue-700 dark:text-blue-200">Sudah Mendaftar</h3>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">120</p>
+        </a>
+
+        <!-- Sudah Daftar Ulang -->
+        <a href="siswa_daftarulang.php"
+          class="group bg-green-100 dark:bg-green-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
+          <i data-lucide="refresh-ccw" class="w-6 h-6 mx-auto mb-2 text-green-700 dark:text-green-200"></i>
+          <h3 class="text-sm font-bold text-green-700 dark:text-green-200">Sudah Daftar Ulang</h3>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-100">85</p>
+        </a>
+
+        <!-- Sudah Tes -->
+        <a href="siswa_sudahtes.php"
+          class="group bg-purple-100 dark:bg-purple-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
+          <i data-lucide="check-circle" class="w-6 h-6 mx-auto mb-2 text-purple-700 dark:text-purple-200"></i>
+          <h3 class="text-sm font-bold text-purple-700 dark:text-purple-200">Sudah Tes</h3>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-100">70</p>
+        </a>
+
+        <!-- Belum Tes -->
+        <a href="siswa_belumtes.php"
+          class="group bg-red-100 dark:bg-red-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
+          <i data-lucide="x-circle" class="w-6 h-6 mx-auto mb-2 text-red-700 dark:text-red-200"></i>
+          <h3 class="text-sm font-bold text-red-700 dark:text-red-200">Belum Tes</h3>
+          <p class="text-lg font-semibold text-red-800 dark:text-red-100">50</p>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Card Besar: Wawancara -->
+    <div
+      class="bg-yellow-100 dark:bg-yellow-900 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-center hover:scale-105 transition">
+      <i data-lucide="mic" class="w-10 h-10 mb-3 text-yellow-700 dark:text-yellow-200"></i>
+      <h2 class="text-base font-bold text-yellow-700 dark:text-yellow-200 mb-2">Wawancara</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk masuk ke sesi wawancara</p>
+      <a href="wawancara.php"
+        class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition">
+        Masuk Wawancara
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+
+</html>
