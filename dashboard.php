@@ -26,12 +26,12 @@
           <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">120</p>
         </a>
 
-        <!-- Sudah Daftar Ulang -->
-        <a href="siswa_daftarulang.php"
-          class="group bg-green-100 dark:bg-green-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
-          <i data-lucide="refresh-ccw" class="w-6 h-6 mx-auto mb-2 text-green-700 dark:text-green-200"></i>
-          <h3 class="text-sm font-bold text-green-700 dark:text-green-200">Sudah Daftar Ulang</h3>
-          <p class="text-lg font-semibold text-green-800 dark:text-green-100">85</p>
+        <!-- Belum Tes -->
+        <a href="siswa_belumtes.php"
+          class="group bg-red-100 dark:bg-red-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
+          <i data-lucide="x-circle" class="w-6 h-6 mx-auto mb-2 text-red-700 dark:text-red-200"></i>
+          <h3 class="text-sm font-bold text-red-700 dark:text-red-200">Belum Tes</h3>
+          <p class="text-lg font-semibold text-red-800 dark:text-red-100">50</p>
         </a>
 
         <!-- Sudah Tes -->
@@ -42,12 +42,12 @@
           <p class="text-lg font-semibold text-purple-800 dark:text-purple-100">70</p>
         </a>
 
-        <!-- Belum Tes -->
-        <a href="siswa_belumtes.php"
-          class="group bg-red-100 dark:bg-red-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
-          <i data-lucide="x-circle" class="w-6 h-6 mx-auto mb-2 text-red-700 dark:text-red-200"></i>
-          <h3 class="text-sm font-bold text-red-700 dark:text-red-200">Belum Tes</h3>
-          <p class="text-lg font-semibold text-red-800 dark:text-red-100">50</p>
+        <!-- Sudah Daftar Ulang -->
+        <a href="siswa_daftarulang.php"
+          class="group bg-green-100 dark:bg-green-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
+          <i data-lucide="refresh-ccw" class="w-6 h-6 mx-auto mb-2 text-green-700 dark:text-green-200"></i>
+          <h3 class="text-sm font-bold text-green-700 dark:text-green-200">Sudah Daftar Ulang</h3>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-100">85</p>
         </a>
 
       </div>
