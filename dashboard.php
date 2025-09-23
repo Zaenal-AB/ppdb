@@ -65,6 +65,30 @@
       </a>
     </div>
 
+    <!-- Card Besar: Tes Akademik -->
+    <div
+      class="bg-indigo-100 dark:bg-indigo-900 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-center hover:scale-105 transition">
+      <i data-lucide="book-open" class="w-10 h-10 mb-3 text-indigo-700 dark:text-indigo-200"></i>
+      <h2 class="text-base font-bold text-indigo-700 dark:text-indigo-200 mb-2">Tes Akademik</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk masuk ke tes akademik</p>
+      <a href="tes_akademik.php"
+        class="inline-block bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition">
+        Masuk Tes Akademik
+      </a>
+    </div>
+
+    <!-- Card Besar: Tes Al-Qur'an -->
+    <div
+      class="bg-teal-100 dark:bg-teal-900 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-center hover:scale-105 transition">
+      <i data-lucide="book" class="w-10 h-10 mb-3 text-teal-700 dark:text-teal-200"></i>
+      <h2 class="text-base font-bold text-teal-700 dark:text-teal-200 mb-2">Tes Al-Qur'an</h2>
+      <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk masuk ke tes Al-Qur'an</p>
+      <a href="tes_quran.php"
+        class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg transition">
+        Masuk Tes Al-Qur'an
+      </a>
+    </div>
+
   </div>
 
   <script>
@@ -72,5 +96,6 @@
   </script>
 
 </body>
+
 
 </html>
