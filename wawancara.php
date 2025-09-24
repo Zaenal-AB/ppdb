@@ -10,6 +10,15 @@
 
 <body class="bg-gray-100 dark:bg-gray-900 min-h-screen p-6">
     <div class="max-w-4xl mx-auto bg-yellow-100 dark:bg-yellow-900 rounded-2xl shadow-lg p-8">
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+            <a href="dashboard.php"
+                class="mt-3 sm:mt-0 inline-block bg-yellow-600 hover:bg-yellow-900 text-white text-sm font-semibold py-2 px-4 rounded-lg transition">
+                ← Kembali ke Dashboard
+            </a>
+        </div>
+
         <h2 class="text-center text-xl font-bold text-yellow-700 dark:text-yellow-200 mb-6">
             Form Wawancara Orang Tua
         </h2>
