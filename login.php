@@ -35,9 +35,9 @@
 
                 <button type="submit"
                     class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                    Login
+                    <a href="dashboard.php">Login</a>
                 </button>
-            </form>
+            </form> 
 
         </div>
     </div>
