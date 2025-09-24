@@ -1,3 +1,29 @@
+<?php
+// session_start();
+
+// if (!isset($_SESSION["login"])) {
+//     echo "<script>
+//     alert('Silahkan Anda Login Dahulu');
+//     document.location.href = 'login.php';
+//          </script>";
+//     exit;
+// }
+
+include 'config/app.php';
+
+
+$data_siswa = select("SELECT * FROM data_siswa ORDER BY created_at DESC ");
+
+
+// Hitung jumlah otomatis
+$total_sudah_daftar = count($data_siswa); // semua siswa
+// $total_belum_tes    = count(select("SELECT * FROM data_siswa WHERE tes_status='Belum'"));
+// $total_sudah_tes    = count(select("SELECT * FROM data_siswa WHERE tes_status='Sudah'"));
+// $total_daftar_ulang = count(select("SELECT * FROM data_siswa WHERE daftar_ulang=1"));
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="id" class="dark">
 
@@ -23,7 +49,7 @@
           class="group bg-blue-100 dark:bg-blue-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
           <i data-lucide="user-plus" class="w-6 h-6 mx-auto mb-2 text-blue-700 dark:text-blue-200"></i>
           <h3 class="text-sm font-bold text-blue-700 dark:text-blue-200">Sudah Mendaftar</h3>
-          <p class="text-lg font-semibold text-blue-800 dark:text-blue-100">120</p>
+          <p class="text-lg font-semibold text-blue-800 dark:text-blue-100"><?= $total_sudah_daftar ?></p>
         </a>
 
         <!-- Belum Tes -->
@@ -31,7 +57,7 @@
           class="group bg-red-100 dark:bg-red-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
           <i data-lucide="x-circle" class="w-6 h-6 mx-auto mb-2 text-red-700 dark:text-red-200"></i>
           <h3 class="text-sm font-bold text-red-700 dark:text-red-200">Belum Tes</h3>
-          <p class="text-lg font-semibold text-red-800 dark:text-red-100">50</p>
+          <p class="text-lg font-semibold text-red-800 dark:text-red-100">0</p>
         </a>
 
         <!-- Sudah Tes -->
@@ -39,7 +65,7 @@
           class="group bg-purple-100 dark:bg-purple-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
           <i data-lucide="check-circle" class="w-6 h-6 mx-auto mb-2 text-purple-700 dark:text-purple-200"></i>
           <h3 class="text-sm font-bold text-purple-700 dark:text-purple-200">Sudah Tes</h3>
-          <p class="text-lg font-semibold text-purple-800 dark:text-purple-100">70</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-100">0</p>
         </a>
 
         <!-- Sudah Daftar Ulang -->
@@ -47,7 +73,7 @@
           class="group bg-green-100 dark:bg-green-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
           <i data-lucide="refresh-ccw" class="w-6 h-6 mx-auto mb-2 text-green-700 dark:text-green-200"></i>
           <h3 class="text-sm font-bold text-green-700 dark:text-green-200">Sudah Daftar Ulang</h3>
-          <p class="text-lg font-semibold text-green-800 dark:text-green-100">85</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-100">0</p>
         </a>
 
       </div>

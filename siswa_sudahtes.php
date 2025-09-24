@@ -1,3 +1,31 @@
+<?php
+// session_start();
+
+
+// if (!isset($_SESSION["login"])) {
+//     echo "<script>
+//     alert('Silahkan Anda Login Dahulu');
+//     document.location.href = 'login.php';
+//          </script>";
+//     exit;
+// }
+
+include 'config/app.php';
+
+//    <th class="py-3 px-4 text-left">No</th>
+//                         <th class="py-3 px-4 text-left">Nama</th>
+//                         <th class="py-3 px-4 text-left">Jenis Kelamin</th>
+//                         <th class="py-3 px-4 text-left">Asal Sekolah</th>
+//                         <th class="py-3 px-4 text-left">Tanggal Tes</th>
+//                         <th class="py-3 px-4 text-left">Status Tes</th>
+
+$data_siswa = select("SELECT nama, jenis_kelamin, sekolah_asal FROM siswa ");
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="id" class="dark">
 

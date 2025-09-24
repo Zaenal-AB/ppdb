@@ -1,3 +1,40 @@
+<?php
+// session_start();
+
+// if (!isset($_SESSION["login"])) {
+//     echo "<script>
+//     alert('Silahkan Anda Login Dahulu');
+//     document.location.href = 'login.php';
+//          </script>";
+//     exit;
+// }
+
+include 'config/app.php';
+// Tanggal hari ini
+$today = date('Y-m-d');
+
+// Ambil bulan dan tahun sekarang
+$year = date('Y');
+$month = date('n');
+
+// Tentukan awal & akhir periode PPDB
+if ($month >= 9) { // September - Desember
+  $periode_awal = "$year-09-01";
+  $periode_akhir = ($year + 1) . "-08-30";
+} else { // Januari - Agustus
+  $periode_awal = ($year - 1) . "-09-01";
+  $periode_akhir = "$year-08-30";
+}
+
+// Ambil data siswa sesuai periode PPDB
+$data_siswa = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      ORDER BY id ASC ");
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="id" class="dark">
 
@@ -30,35 +67,26 @@
             <th class="py-3 px-4 text-left">Jenis Kelamin</th>
             <th class="py-3 px-4 text-left">Asal Sekolah</th>
             <th class="py-3 px-4 text-left">Tanggal Daftar</th>
+            <th class="py-3 px-4 text-center">Aksi</th>
+
           </tr>
         </thead>
         <tbody class="text-gray-700 dark:text-gray-300 text-sm divide-y divide-gray-200 dark:divide-gray-700">
-
-          <!-- Contoh data statis -->
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-            <td class="py-3 px-4">1</td>
-            <td class="py-3 px-4 font-medium">Ahmad Fauzi</td>
-            <td class="py-3 px-4">Laki-laki</td>
-            <td class="py-3 px-4">SDN 1 Mataram</td>
-            <td class="py-3 px-4">2025-09-15</td>
-          </tr>
-
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-            <td class="py-3 px-4">2</td>
-            <td class="py-3 px-4 font-medium">Siti Aisyah</td>
-            <td class="py-3 px-4">Perempuan</td>
-            <td class="py-3 px-4">SDIT Al-Falah</td>
-            <td class="py-3 px-4">2025-09-16</td>
-          </tr>
-
-          <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-            <td class="py-3 px-4">3</td>
-            <td class="py-3 px-4 font-medium">Budi Santoso</td>
-            <td class="py-3 px-4">Laki-laki</td>
-            <td class="py-3 px-4">SD Muhammadiyah</td>
-            <td class="py-3 px-4">2025-09-18</td>
-          </tr>
-
+          <?php $no = 1; ?>
+          <?php foreach ($data_siswa as $siswa) : ?>
+            <tr>
+              <td class="py-3 px-4"><?= $no++; ?></td>
+              <td class="py-3 px-4"><?= htmlspecialchars($siswa['nama_lengkap']); ?></td>
+              <td class="py-3 px-4"><?= htmlspecialchars($siswa['jenis_kelamin']); ?></td>
+              <td class="py-3 px-4"><?= htmlspecialchars($siswa['sekolah_asal']); ?></td>
+              <td class="py-3 px-4"><?= date('d-m-Y H:i', strtotime($siswa['created_at'])); ?></td>
+              <td class="py-3 px-4 text-center">
+                <a href="detail_siswa.php?id=<?= $siswa['id']; ?>"
+                  class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-1 px-3 rounded-lg transition">
+                  Detail</a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </div>
