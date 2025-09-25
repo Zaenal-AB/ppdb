@@ -29,7 +29,6 @@ function select($query, $params = [])
 
 // ================ BAGIAN DATA SISWA ========================= //
 
-// fungsi menambahkan siswa
 function create_siswa($post, $files)
 {
     global $conn;
@@ -48,39 +47,79 @@ function create_siswa($post, $files)
     $kabupaten      = htmlspecialchars($post['kabupaten']);
     $kelas          = htmlspecialchars($post['kelas']);
     $jalur          = htmlspecialchars($post['jalur']);
-    $keterangan_jalur = isset($post['keterangan_jalur']) ? htmlspecialchars($post['keterangan_jalur']) : '';
+    $keterangan_jalur = isset($post['keterangan_jalur']) ? htmlspecialchars($post['keterangan_jalur']) : null;
     $nama_ayah      = htmlspecialchars($post['nama_ayah']);
     $pekerjaan_ayah = htmlspecialchars($post['pekerjaan_ayah']);
     $nama_ibu       = htmlspecialchars($post['nama_ibu']);
     $pekerjaan_ibu  = htmlspecialchars($post['pekerjaan_ibu']);
     $no_hp          = htmlspecialchars($post['no_hp']);
-    $nama_wali      = htmlspecialchars($post['nama_wali']);
-    $pekerjaan_wali = htmlspecialchars($post['pekerjaan_wali']);
-    $no_hp_wali     = htmlspecialchars($post['no_hp_wali']);
+    $nama_wali      = !empty($post['nama_wali']) ? htmlspecialchars($post['nama_wali']) : null;
+    $pekerjaan_wali = !empty($post['pekerjaan_wali']) ? htmlspecialchars($post['pekerjaan_wali']) : null;
+    $no_hp_wali     = !empty($post['no_hp_wali']) ? htmlspecialchars($post['no_hp_wali']) : null;
     $sumber_info    = htmlspecialchars($post['sumber_info']);
-    $sumber_info_lainnya = isset($post['sumber_info_lainnya']) ? htmlspecialchars($post['sumber_info_lainnya']) : '';
+    $sumber_info_lainnya = isset($post['sumber_info_lainnya']) ? htmlspecialchars($post['sumber_info_lainnya']) : null;
 
     // Upload file
-    $upload_dir = "uploads/";
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
-
+    $bukti = upload_file($files['bukti'], "uploads/bukti");
     $akta  = upload_file($files['akta'], "uploads/akta");
     $kk    = upload_file($files['kk'], "uploads/kk");
-    $bukti = upload_file($files['bukti'], "uploads/bukti");
 
+    if (!$bukti || !$akta || !$kk) {
+        return 0; // jika upload gagal
+    }
 
-    // Query insert
+    // Query pakai prepared statement
     $query = "INSERT INTO data_siswa 
-        (nama_lengkap, nisn, tempat_lahir, tanggal_lahir, jenis_kelamin, sekolah_asal, anakke, jsaudara, alamat, kecamatan, kabupaten, kelas, jalur, keterangan_jalur, nama_ayah, pekerjaan_ayah, nama_ibu, pekerjaan_ibu, no_hp, nama_wali, pekerjaan_wali, no_hp_wali, sumber_info, sumber_info_lainnya, akta, kk, bukti, created_at)
-        VALUES 
-        ('$nama_lengkap','$nisn','$tempat_lahir','$tanggal_lahir','$jenis_kelamin','$sekolah_asal','$anakke','$jsaudara','$alamat','$kecamatan','$kabupaten','$kelas','$jalur','$keterangan_jalur','$nama_ayah','$pekerjaan_ayah','$nama_ibu','$pekerjaan_ibu','$no_hp','$nama_wali','$pekerjaan_wali','$no_hp_wali','$sumber_info','$sumber_info_lainnya','$akta','$kk','$bukti',NOW())";
+        (nama_lengkap, nisn, tempat_lahir, tanggal_lahir, jenis_kelamin, sekolah_asal, 
+         anakke, jsaudara, alamat, kecamatan, kabupaten, kelas, jalur, keterangan_jalur, 
+         nama_ayah, pekerjaan_ayah, nama_ibu, pekerjaan_ibu, no_hp, nama_wali, pekerjaan_wali, 
+         no_hp_wali, sumber_info, sumber_info_lainnya, bukti, akta, kk, created_at)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
 
-    mysqli_query($conn, $query);
+    $stmt = $conn->prepare($query);
 
-    return mysqli_affected_rows($conn);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    $stmt->bind_param(
+        "sssssssssssssssssssssssssss",
+        $nama_lengkap,
+        $nisn,
+        $tempat_lahir,
+        $tanggal_lahir,
+        $jenis_kelamin,
+        $sekolah_asal,
+        $anakke,
+        $jsaudara,
+        $alamat,
+        $kecamatan,
+        $kabupaten,
+        $kelas,
+        $jalur,
+        $keterangan_jalur,
+        $nama_ayah,
+        $pekerjaan_ayah,
+        $nama_ibu,
+        $pekerjaan_ibu,
+        $no_hp,
+        $nama_wali,
+        $pekerjaan_wali,
+        $no_hp_wali,
+        $sumber_info,
+        $sumber_info_lainnya,
+        $bukti,
+        $akta,
+        $kk
+    );
+
+    if ($stmt->execute()) {
+        return $stmt->affected_rows;
+    } else {
+        die("Execute failed: " . $stmt->error);
+    }
 }
+
 
 // Fungsi helper untuk upload file dengan nama unik & folder khusus
 function upload_file($file, $folder = "uploads")

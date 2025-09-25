@@ -6,8 +6,11 @@ include 'config/app.php';
 // Jika tombol tambah siswa ditekan
 if (isset($_POST['tambah'])) {
   if (create_siswa($_POST, $_FILES) > 0) {
+    // Simpan nama siswa ke session
+    $_SESSION['nama_siswa'] = $_POST['nama_lengkap'];
+
     echo "<script>
-        document.location.href = 'index.php';
+        document.location.href = 'wa.php';
         </script>";
   } else {
     echo "<script>
@@ -16,6 +19,8 @@ if (isset($_POST['tambah'])) {
         </script>";
   }
 }
+
+
 
 
 ?>
@@ -182,7 +187,7 @@ if (isset($_POST['tambah'])) {
               <label class="form-label">Sekolah Asal *</label>
               <input
                 type="text"
-                name="sekolah-asal"
+                name="sekolah_asal"
                 placeholder="nama SD/MI"
                 required
                 class="mt-1 w-full p-2 rounded-lg border border-slate-600 dark:bg-gray-700" />
@@ -616,6 +621,7 @@ if (isset($_POST['tambah'])) {
       }
     });
 
+
     // Preview file upload untuk kartu keluarga
     document.getElementById("kk").addEventListener("change", function() {
       const file = this.files[0];
@@ -639,14 +645,12 @@ if (isset($_POST['tambah'])) {
       }
     });
 
-    // Form validation & dummy submit
-    const form = document.getElementById("ppdbForm");
     form.addEventListener("submit", (e) => {
-      e.preventDefault();
       if (!form.checkValidity()) {
+        e.preventDefault();
         alert("Mohon lengkapi semua field wajib dengan benar.");
-        return;
       }
+      // kalau valid → biarkan form submit ke PHP
     });
 
     // Tambahan: Menampilkan pesan ketika field akta di-klik
