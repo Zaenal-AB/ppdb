@@ -311,6 +311,14 @@ if (isset($_POST['tambah'])) {
                 class="mt-1 w-full p-2 rounded-lg border border-slate-600 dark:bg-gray-700" />
             </div>
             <div>
+              <label class="form-label">Tempat Ayah Bekerja</label>
+              <input
+                type="text"
+                name="tempat_bekerja_ayah"
+                placeholder="Ex: PT. ABC, Dinas X, dsb"
+                class="mt-1 w-full p-2 rounded-lg border border-slate-600 dark:bg-gray-700" />
+            </div>
+            <div>
               <label class="form-label">Nama Ibu *</label>
               <input
                 type="text"
@@ -329,6 +337,14 @@ if (isset($_POST['tambah'])) {
                 name="pekerjaan_ibu"
                 placeholder="Pekerjaan ibu"
                 required
+                class="mt-1 w-full p-2 rounded-lg border border-slate-600 dark:bg-gray-700" />
+            </div>
+            <div>
+              <label class="form-label">Tempat Ibu Bekerja</label>
+              <input
+                type="text"
+                name="tempat_bekerja_ibu"
+                placeholder="Ex: PT. ABC, Dinas X, dsb"
                 class="mt-1 w-full p-2 rounded-lg border border-slate-600 dark:bg-gray-700" />
             </div>
             <div>
@@ -384,7 +400,7 @@ if (isset($_POST['tambah'])) {
             <div>
               <h2
                 class="text-xl font-bold mb-4 text-blue-700 underline underline-offset-1">
-                Mendapatkan informasi PPDB dari mana?
+                Mendapatkan informasi PPDB dari mana? *
               </h2>
               <p class="mb-1">
                 Pilih salah satu sumber informasi di bawah ini:
@@ -452,7 +468,7 @@ if (isset($_POST['tambah'])) {
               <!-- Upload Bukti Pendaftaran -->
               <h2
                 class="text-xl font-bold mb-4 text-blue-700 underline underline-offset-1">
-                Upload Bukti Pendaftaran
+                Upload Bukti Pendaftaran*
               </h2>
               <input
                 type="file"
@@ -470,7 +486,7 @@ if (isset($_POST['tambah'])) {
               <!-- Upload Akta Kelahiran -->
               <h2
                 class="text-xl font-bold mb-4 text-blue-700 underline underline-offset-1">
-                Upload Akta Kelahiran
+                Upload Akta Kelahiran*
               </h2>
               <input
                 type="file"
@@ -488,7 +504,7 @@ if (isset($_POST['tambah'])) {
               <!-- Upload Kartu Keluarga -->
               <h2
                 class="text-xl font-bold mb-4 text-blue-700 underline underline-offset-1">
-                Upload Kartu Keluarga
+                Upload Kartu Keluarga*
               </h2>
               <input
                 type="file"

@@ -50,8 +50,10 @@ function create_siswa($post, $files)
     $keterangan_jalur = isset($post['keterangan_jalur']) ? htmlspecialchars($post['keterangan_jalur']) : null;
     $nama_ayah      = htmlspecialchars($post['nama_ayah']);
     $pekerjaan_ayah = htmlspecialchars($post['pekerjaan_ayah']);
+    $tempat_bekerja_ayah = htmlspecialchars($post['tempat_bekerja_ayah']);
     $nama_ibu       = htmlspecialchars($post['nama_ibu']);
     $pekerjaan_ibu  = htmlspecialchars($post['pekerjaan_ibu']);
+    $tempat_bekerja_ibu = htmlspecialchars($post['tempat_bekerja_ibu']);
     $no_hp          = htmlspecialchars($post['no_hp']);
     $nama_wali      = !empty($post['nama_wali']) ? htmlspecialchars($post['nama_wali']) : null;
     $pekerjaan_wali = !empty($post['pekerjaan_wali']) ? htmlspecialchars($post['pekerjaan_wali']) : null;
@@ -72,9 +74,10 @@ function create_siswa($post, $files)
     $query = "INSERT INTO data_siswa 
         (nama_lengkap, nisn, tempat_lahir, tanggal_lahir, jenis_kelamin, sekolah_asal, 
          anakke, jsaudara, alamat, kecamatan, kabupaten, kelas, jalur, keterangan_jalur, 
-         nama_ayah, pekerjaan_ayah, nama_ibu, pekerjaan_ibu, no_hp, nama_wali, pekerjaan_wali, 
+         nama_ayah, pekerjaan_ayah, tempat_bekerja_ayah, nama_ibu, pekerjaan_ibu, tempat_bekerja_ibu, no_hp, nama_wali, pekerjaan_wali, 
          no_hp_wali, sumber_info, sumber_info_lainnya, bukti, akta, kk, created_at)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())";
+   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW())
+";
 
     $stmt = $conn->prepare($query);
 
@@ -83,7 +86,7 @@ function create_siswa($post, $files)
     }
 
     $stmt->bind_param(
-        "sssssssssssssssssssssssssss",
+        "sssssssssssssssssssssssssssss",
         $nama_lengkap,
         $nisn,
         $tempat_lahir,
@@ -100,8 +103,10 @@ function create_siswa($post, $files)
         $keterangan_jalur,
         $nama_ayah,
         $pekerjaan_ayah,
+        $tempat_bekerja_ayah,
         $nama_ibu,
         $pekerjaan_ibu,
+        $tempat_bekerja_ibu,
         $no_hp,
         $nama_wali,
         $pekerjaan_wali,

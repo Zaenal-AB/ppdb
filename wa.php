@@ -17,7 +17,7 @@ $nama_siswa = isset($_SESSION['nama_siswa']) ? $_SESSION['nama_siswa'] : 'Ananda
 
     <div class="max-w-lg w-full bg-white rounded-2xl shadow-lg p-8 text-center">
         <!-- Logo Sekolah -->
-        <img src="logo.png" alt="Logo Sekolah" class="mx-auto w-20 mb-4">
+        <img src="assets/logo-circle-web.png" alt="Logo Sekolah" class="mx-auto w-20 mb-4">
 
         <h1 class="text-2xl font-bold text-gray-800 mb-2">
             Terima Kasih 🙏
