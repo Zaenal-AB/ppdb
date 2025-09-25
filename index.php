@@ -33,7 +33,7 @@ if (isset($_POST['tambah'])) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Formulir PPDB - SMPIT Anak Sholeh Mataram</title>
+  <title>Formulir SPMB - SMPIT Anak Sholeh Mataram</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .form-label {
@@ -73,7 +73,7 @@ if (isset($_POST['tambah'])) {
         <div class="text-center md:text-left">
           <h1
             class="text-2xl md:text-4xl font-extrabold text-white drop-shadow">
-            Formulir PPDB 2026/2027
+            Formulir SPMB 2026/2027
           </h1>
           <p class="text-sm md:text-base text-indigo-100 mt-2">
             SMPIT Anak Sholeh Mataram — Jalan Pondok Indah, Kota Mataram.
