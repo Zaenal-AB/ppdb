@@ -1,25 +1,63 @@
 <?php
-// session_start();
+session_start();
 
-// if (!isset($_SESSION["login"])) {
-//     echo "<script>
-//     alert('Silahkan Anda Login Dahulu');
-//     document.location.href = 'login.php';
-//          </script>";
-//     exit;
-// }
+if (!isset($_SESSION["login"])) {
+  echo "<script>
+    alert('Silahkan Anda Login Dahulu');
+    document.location.href = 'login.php';
+         </script>";
+  exit;
+}
 
 include 'config/app.php';
 
 
-$data_siswa = select("SELECT * FROM data_siswa ORDER BY created_at DESC ");
+// Tanggal hari ini
+$today = date('Y-m-d');
+
+// Ambil bulan dan tahun sekarang
+$year = date('Y');
+$month = date('n');
+
+// Tentukan awal & akhir periode PPDB
+if ($month >= 9) { // September - Desember
+  $periode_awal = "$year-09-01";
+  $periode_akhir = ($year + 1) . "-08-30";
+} else { // Januari - Agustus
+  $periode_awal = ($year - 1) . "-09-01";
+  $periode_akhir = "$year-08-30";
+}
+
+// Ambil data siswa sesuai periode PPDB
+$data_siswa = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      ORDER BY created_at DESC ");
+
+// Ambil data siswa sesuai periode PPDB
+$data_siswa_belum_tes = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      AND tes_akademik = 'Belum' 
+                      OR tes_quran = 'Belum'
+                      ORDER BY id ASC");
+
+$data_siswa_sudah_tes = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      AND tes_akademik = 'Sudah' 
+                      AND tes_quran = 'Sudah'
+                      ORDER BY id ASC");
+
+
 
 
 // Hitung jumlah otomatis
 $total_sudah_daftar = count($data_siswa); // semua siswa
-// $total_belum_tes    = count(select("SELECT * FROM data_siswa WHERE tes_status='Belum'"));
-// $total_sudah_tes    = count(select("SELECT * FROM data_siswa WHERE tes_status='Sudah'"));
+$total_belum_tes    = count($data_siswa_belum_tes);
+$total_sudah_tes    = count($data_siswa_sudah_tes);
 // $total_daftar_ulang = count(select("SELECT * FROM data_siswa WHERE daftar_ulang=1"));
+
+
+
+// <------------ END CONTROLLER -------------->
 
 ?>
 
@@ -57,7 +95,7 @@ $total_sudah_daftar = count($data_siswa); // semua siswa
           class="group bg-red-100 dark:bg-red-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
           <i data-lucide="x-circle" class="w-6 h-6 mx-auto mb-2 text-red-700 dark:text-red-200"></i>
           <h3 class="text-sm font-bold text-red-700 dark:text-red-200">Belum Tes</h3>
-          <p class="text-lg font-semibold text-red-800 dark:text-red-100">0</p>
+          <p class="text-lg font-semibold text-red-800 dark:text-red-100"><?= $total_belum_tes ?></p>
         </a>
 
         <!-- Sudah Tes -->
@@ -65,7 +103,7 @@ $total_sudah_daftar = count($data_siswa); // semua siswa
           class="group bg-purple-100 dark:bg-purple-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
           <i data-lucide="check-circle" class="w-6 h-6 mx-auto mb-2 text-purple-700 dark:text-purple-200"></i>
           <h3 class="text-sm font-bold text-purple-700 dark:text-purple-200">Sudah Tes</h3>
-          <p class="text-lg font-semibold text-purple-800 dark:text-purple-100">0</p>
+          <p class="text-lg font-semibold text-purple-800 dark:text-purple-100"><?= $total_sudah_tes ?></p>
         </a>
 
         <!-- Sudah Daftar Ulang -->

@@ -1,26 +1,46 @@
 <?php
-// session_start();
+session_start();
 
-
-// if (!isset($_SESSION["login"])) {
-//     echo "<script>
-//     alert('Silahkan Anda Login Dahulu');
-//     document.location.href = 'login.php';
-//          </script>";
-//     exit;
-// }
+if (!isset($_SESSION["login"])) {
+  echo "<script>
+    alert('Silahkan Anda Login Dahulu');
+    document.location.href = 'login.php';
+         </script>";
+  exit;
+}
 
 include 'config/app.php';
 
-//    <th class="py-3 px-4 text-left">No</th>
-//                         <th class="py-3 px-4 text-left">Nama</th>
-//                         <th class="py-3 px-4 text-left">Jenis Kelamin</th>
-//                         <th class="py-3 px-4 text-left">Asal Sekolah</th>
-//                         <th class="py-3 px-4 text-left">Tanggal Tes</th>
-//                         <th class="py-3 px-4 text-left">Status Tes</th>
+// <-------------- CONTROLLER -------------->
 
-$data_siswa = select("SELECT nama, jenis_kelamin, sekolah_asal FROM siswa ");
 
+// Tanggal hari ini
+$today = date('Y-m-d');
+
+// Ambil bulan dan tahun sekarang
+$year = date('Y');
+$month = date('n');
+
+// Tentukan awal & akhir periode PPDB
+if ($month >= 9) { // September - Desember
+  $periode_awal = "$year-09-01";
+  $periode_akhir = ($year + 1) . "-08-30";
+} else { // Januari - Agustus
+  $periode_awal = ($year - 1) . "-09-01";
+  $periode_akhir = "$year-08-30";
+}
+
+// Ambil data siswa sesuai periode PPDB
+$data_siswa = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      AND tes_akademik = 'Sudah' 
+                      AND tes_quran = 'Sudah'
+                      ORDER BY id ASC");
+
+
+
+
+// <------------ END CONTROLLER -------------->
 ?>
 
 
@@ -62,35 +82,45 @@ $data_siswa = select("SELECT nama, jenis_kelamin, sekolah_asal FROM siswa ");
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 dark:text-gray-300 text-sm divide-y divide-gray-200 dark:divide-gray-700">
-
-                    <!-- Contoh data statis -->
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">1</td>
-                        <td class="py-3 px-4 font-medium">Aisyah Putri</td>
-                        <td class="py-3 px-4">Perempuan</td>
-                        <td class="py-3 px-4">SDIT Al-Hikmah</td>
-                        <td class="py-3 px-4">2025-09-15</td>
-                        <td class="py-3 px-4 text-green-600 font-semibold">Lulus</td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">2</td>
-                        <td class="py-3 px-4 font-medium">Ahmad Zidan</td>
-                        <td class="py-3 px-4">Laki-laki</td>
-                        <td class="py-3 px-4">SDN 1 Cakranegara</td>
-                        <td class="py-3 px-4">2025-09-16</td>
-                        <td class="py-3 px-4 text-yellow-600 font-semibold">Menunggu</td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">3</td>
-                        <td class="py-3 px-4 font-medium">Siti Khadijah</td>
-                        <td class="py-3 px-4">Perempuan</td>
-                        <td class="py-3 px-4">SD Muhammadiyah</td>
-                        <td class="py-3 px-4">2025-09-17</td>
-                        <td class="py-3 px-4 text-green-600 font-semibold">Lulus</td>
-                    </tr>
-
+                    <?php if (empty($data_siswa)) : ?>
+                        <tr>
+                            <td colspan="6" class="text-center py-4">Tidak ada data siswa.</td>
+                        </tr>
+                    <?php else : ?>
+                        <?php $no = 1; ?>
+                        <?php foreach ($data_siswa as $siswa) : ?>
+                            <tr>
+                                <td class="py-3 px-4"><?= $no++; ?></td>
+                                <td class="py-3 px-4"><?= htmlspecialchars($siswa['nama_lengkap']); ?></td>
+                                <td class="py-3 px-4"><?= htmlspecialchars($siswa['jenis_kelamin']); ?></td>
+                                <td class="py-3 px-4"><?= htmlspecialchars($siswa['sekolah_asal']); ?></td>
+                                <td class="py-3 px-4">
+                                    <?php
+                                    if ($siswa['tes_akademik'] === 'Sudah') {
+                                        echo htmlspecialchars($siswa['tanggal_tes_akademik']);
+                                    } elseif ($siswa['tes_quran'] === 'Sudah') {
+                                        echo htmlspecialchars($siswa['tanggal_tes_quran']);
+                                    } else {
+                                        echo '-';
+                                    }
+                                    ?>
+                                </td>
+                                <td class="py-3 px-4">
+                                    <?php
+                                    if ($siswa['tes_akademik'] === 'Sudah' && $siswa['tes_quran'] === 'Sudah') {
+                                        echo '<span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Tes Akademik & Quran Sudah</span>';
+                                    } elseif ($siswa['tes_akademik'] === 'Sudah') {
+                                        echo '<span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Tes Akademik Sudah</span>';
+                                    } elseif ($siswa['tes_quran'] === 'Sudah') {
+                                        echo '<span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Tes Quran Sudah</span>';
+                                    } else {
+                                        echo '<span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">Belum Tes</span>';
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

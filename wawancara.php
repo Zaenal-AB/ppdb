@@ -1,3 +1,24 @@
+<?php 
+session_start();
+if (
+    !isset($_SESSION["login"]) 
+    && $_SESSION["identit4s"] !== "super4admin" 
+    && $_SESSION["identit4s"] !== "admin7&"
+) {
+    echo "<script>
+        alert('Akses Hanya untuk Tim Wawancara');
+        document.location.href = 'dashboard.php';
+    </script>";
+    exit;
+}
+
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="id" class="dark">
 

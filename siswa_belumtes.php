@@ -1,3 +1,48 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    echo "<script>
+    alert('Silahkan Anda Login Dahulu');
+    document.location.href = 'login.php';
+         </script>";
+    exit;
+}
+
+include 'config/app.php';
+
+// <-------------- CONTROLLER -------------->
+
+
+// Tanggal hari ini
+$today = date('Y-m-d');
+
+// Ambil bulan dan tahun sekarang
+$year = date('Y');
+$month = date('n');
+
+// Tentukan awal & akhir periode PPDB
+if ($month >= 9) { // September - Desember
+    $periode_awal = "$year-09-01";
+    $periode_akhir = ($year + 1) . "-08-30";
+} else { // Januari - Agustus
+    $periode_awal = ($year - 1) . "-09-01";
+    $periode_akhir = "$year-08-30";
+}
+
+
+// Ambil data siswa sesuai periode PPDB
+$data_siswa = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      AND tes_akademik = 'Belum' 
+                      OR tes_quran = 'Belum'
+                      ORDER BY id ASC");
+
+
+
+// <------------ END CONTROLLER -------------->
+?>
+
 <!DOCTYPE html>
 <html lang="id" class="dark">
 
@@ -34,34 +79,30 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 dark:text-gray-300 text-sm divide-y divide-gray-200 dark:divide-gray-700">
+                    <?php if (empty($data_siswa)) : ?>
+                        <tr>
+                            <td colspan="6" class="py-4 px-4 text-center text-gray-500 dark:text-gray-400">
+                                Tidak ada data siswa yang belum tes.
+                            </td>
+                        </tr>
+                    <?php else : ?>
+                        <?php $no = 1; ?>
+                        <?php foreach ($data_siswa as $siswa) : ?>
+                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <td class="py-3 px-4 align-top"><?= $no++; ?></td>
+                                <td class="py-3 px-4 align-top"><?= htmlspecialchars($siswa['nama_lengkap']); ?></td>
+                                <td class="py-3 px-4 align-top"><?= htmlspecialchars($siswa['jenis_kelamin']); ?></td>
+                                <td class="py-3 px-4 align-top"><?= htmlspecialchars($siswa['sekolah_asal']); ?></td>
+                                <td class="py-3 px-4 align-top">
+                                    <a href="https://wa.me/<?= preg_replace('/\D/', '', $siswa['no_hp']); ?>" target="_blank" class="text-blue-600 hover:underline">
+                                        <?= htmlspecialchars($siswa['no_hp']); ?>
+                                    </a>
+                                </td>
+                                <td class="py-3 px-4 align-top">Belum Tes</td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
-                    <!-- Contoh data statis -->
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">1</td>
-                        <td class="py-3 px-4 font-medium">Budi Santoso</td>
-                        <td class="py-3 px-4">Laki-laki</td>
-                        <td class="py-3 px-4">SDN 2 Mataram</td>
-                        <td class="py-3 px-4">0812-xxxx-xxxx</td>
-                        <td class="py-3 px-4 text-red-600 font-semibold">Belum Tes</td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">2</td>
-                        <td class="py-3 px-4 font-medium">Nur Aisyah</td>
-                        <td class="py-3 px-4">Perempuan</td>
-                        <td class="py-3 px-4">MI Al-Furqan</td>
-                        <td class="py-3 px-4">0857-xxxx-xxxx</td>
-                        <td class="py-3 px-4 text-red-600 font-semibold">Belum Tes</td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">3</td>
-                        <td class="py-3 px-4 font-medium">Rizki Hidayat</td>
-                        <td class="py-3 px-4">Laki-laki</td>
-                        <td class="py-3 px-4">SDN 5 Cakranegara</td>
-                        <td class="py-3 px-4">0823-xxxx-xxxx</td>
-                        <td class="py-3 px-4 text-red-600 font-semibold">Belum Tes</td>
-                    </tr>
 
                 </tbody>
             </table>

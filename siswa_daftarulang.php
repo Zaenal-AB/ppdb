@@ -1,3 +1,44 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["login"])) {
+  echo "<script>
+    alert('Silahkan Anda Login Dahulu');
+    document.location.href = 'login.php';
+         </script>";
+  exit;
+}
+
+include 'config/app.php';
+
+// <-------------- CONTROLLER -------------->
+
+
+// Tanggal hari ini
+$today = date('Y-m-d');
+
+// Ambil bulan dan tahun sekarang
+$year = date('Y');
+$month = date('n');
+
+// Tentukan awal & akhir periode PPDB
+if ($month >= 9) { // September - Desember
+  $periode_awal = "$year-09-01";
+  $periode_akhir = ($year + 1) . "-08-30";
+} else { // Januari - Agustus
+  $periode_awal = ($year - 1) . "-09-01";
+  $periode_akhir = "$year-08-30";
+}
+
+// Ambil data siswa sesuai periode PPDB
+$data_siswa = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      ORDER BY id ASC ");
+
+
+// <------------ END CONTROLLER -------------->
+?>
+
 <!DOCTYPE html>
 <html lang="id" class="dark">
 

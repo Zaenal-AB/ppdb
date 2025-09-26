@@ -1,15 +1,19 @@
 <?php
-// session_start();
+session_start();
 
-// if (!isset($_SESSION["login"])) {
-//     echo "<script>
-//     alert('Silahkan Anda Login Dahulu');
-//     document.location.href = 'login.php';
-//          </script>";
-//     exit;
-// }
+if (!isset($_SESSION["login"])) {
+  echo "<script>
+    alert('Silahkan Anda Login Dahulu');
+    document.location.href = 'login.php';
+         </script>";
+  exit;
+}
 
 include 'config/app.php';
+
+// <-------------- CONTROLLER -------------->
+
+
 // Tanggal hari ini
 $today = date('Y-m-d');
 
@@ -30,10 +34,10 @@ if ($month >= 9) { // September - Desember
 $data_siswa = select("SELECT * FROM data_siswa 
                       WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
                       ORDER BY id ASC ");
+
+
+// <------------ END CONTROLLER -------------->
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="id" class="dark">
@@ -67,7 +71,10 @@ $data_siswa = select("SELECT * FROM data_siswa
             <th class="py-3 px-4 text-left">Jenis Kelamin</th>
             <th class="py-3 px-4 text-left">Asal Sekolah</th>
             <th class="py-3 px-4 text-left">Tanggal Daftar</th>
-            <th class="py-3 px-4 text-center">Aksi</th>
+            <?php if ($_SESSION['identit4s'] == "admin4$" || $_SESSION['identit4s'] == "super4admin") : ?>
+              <th class="py-3 px-4 text-center">Aksi</th>
+            <?php endif; ?>
+
 
           </tr>
         </thead>
@@ -80,11 +87,16 @@ $data_siswa = select("SELECT * FROM data_siswa
               <td class="py-3 px-4"><?= htmlspecialchars($siswa['jenis_kelamin']); ?></td>
               <td class="py-3 px-4"><?= htmlspecialchars($siswa['sekolah_asal']); ?></td>
               <td class="py-3 px-4"><?= date('d-m-Y H:i', strtotime($siswa['created_at'])); ?></td>
-              <td class="py-3 px-4 text-center">
-                <a href="detail_siswa.php?id=<?= $siswa['id']; ?>"
-                  class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-1 px-3 rounded-lg transition">
-                  Detail</a>
-              </td>
+              <?php if ($_SESSION['identit4s'] == "admin4$" || $_SESSION['identit4s'] == "super4admin") : ?>
+                <td class="py-3 px-4 text-center">
+                  <a href="detail_siswa.php?id=<?= $siswa['id']; ?>"
+                    class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-1 px-3 rounded-lg transition">
+                    Detail
+                  </a>
+                </td>
+              <?php endif; ?>
+
+
             </tr>
           <?php endforeach; ?>
         </tbody>
