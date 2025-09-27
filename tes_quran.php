@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (
-    !isset($_SESSION["login"]) 
-    && $_SESSION["identit4s"] !== "super4admin" 
+    !isset($_SESSION["login"])
+    && $_SESSION["identit4s"] !== "super4admin"
     && $_SESSION["identit4s"] !== "admin7&"
 ) {
     echo "<script>
@@ -28,18 +28,18 @@ if (isset($_POST['simpan_quran'])) {
                   tanggal_tes_quran = '$tanggal_tes_quran',
                   pengumuman = '$pengumuman'
               WHERE id = '$siswa_id'";
+}
 
-    if (mysqli_query($conn, $query)) {
-        echo "<script>
+if (mysqli_query($conn, $query)) {
+    echo "<script>
           alert('Tes Al-Qur\\'an berhasil disimpan!');
           document.location.href = 'rekap_tes_quran.php';
         </script>";
-    } else {
-        echo "<script>
+} else {
+    echo "<script>
           alert('Gagal menyimpan tes Qur\\'an!');
           document.location.href = 'form_tes_quran.php';
         </script>";
-    }
 }
 
 

@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION["login"])) {
-  echo "<script>
+    echo "<script>
     alert('Silahkan Anda Login Dahulu');
     document.location.href = 'login.php';
          </script>";
-  exit;
+    exit;
 }
 
 include 'config/app.php';
@@ -23,18 +23,24 @@ $month = date('n');
 
 // Tentukan awal & akhir periode PPDB
 if ($month >= 9) { // September - Desember
-  $periode_awal = "$year-09-01";
-  $periode_akhir = ($year + 1) . "-08-30";
+    $periode_awal = "$year-09-01";
+    $periode_akhir = ($year + 1) . "-08-30";
 } else { // Januari - Agustus
-  $periode_awal = ($year - 1) . "-09-01";
-  $periode_akhir = "$year-08-30";
+    $periode_awal = ($year - 1) . "-09-01";
+    $periode_akhir = "$year-08-30";
 }
 
 // Ambil data siswa sesuai periode PPDB
-$data_siswa = select("SELECT * FROM data_siswa 
+$data_siswa_sudah_tes = select("SELECT * FROM data_siswa 
                       WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
-                      ORDER BY id ASC ");
+                      AND tes_akademik = 'Sudah' 
+                      AND tes_quran = 'Sudah'
+                      ORDER BY id ASC");
 
+$data_siswa_du = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                        AND daftar_ulang = 1
+                      ORDER BY id ASC");
 
 // <------------ END CONTROLLER -------------->
 ?>
@@ -74,31 +80,27 @@ $data_siswa = select("SELECT * FROM data_siswa
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 dark:text-gray-300 text-sm divide-y divide-gray-200 dark:divide-gray-700">
+                    <?php if (empty($data_siswa_du)) : ?>
+                        <tr>
+                            <td colspan="5" class="text-center py-4">Belum ada data siswa yang melakukan daftar ulang.</td>
+                        </tr>
+                    <?php else : ?>
+                        <?php $no = 1; ?>
+                        <?php foreach ($data_siswa_du as $siswa) : ?>
+                            <?php if ($siswa['daftar_ulang'] == 1) : ?>
+                                <tr>
+                                    <td class="py-3 px-4"><?= $no++; ?></td>
+                                    <td class="py-3 px-4"><?= htmlspecialchars($siswa['nama_lengkap']); ?></td>
+                                    <td class="py-3 px-4"><?= htmlspecialchars($siswa['jenis_kelamin']); ?></td>
+                                    <td class="py-3 px-4"><?= htmlspecialchars($siswa['asal_sekolah']); ?></td>
+                                    <td class="py-3 px-4">
+                                        <?= date('d M Y', strtotime($siswa['tanggal_daftar_ulang'])); ?>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
-                    <!-- Contoh data statis -->
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">1</td>
-                        <td class="py-3 px-4 font-medium">Nurul Hidayah</td>
-                        <td class="py-3 px-4">Perempuan</td>
-                        <td class="py-3 px-4">SDN 2 Mataram</td>
-                        <td class="py-3 px-4">2025-09-17</td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">2</td>
-                        <td class="py-3 px-4 font-medium">Rizky Maulana</td>
-                        <td class="py-3 px-4">Laki-laki</td>
-                        <td class="py-3 px-4">SDIT Nurul Islam</td>
-                        <td class="py-3 px-4">2025-09-18</td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="py-3 px-4">3</td>
-                        <td class="py-3 px-4 font-medium">Aulia Rahman</td>
-                        <td class="py-3 px-4">Laki-laki</td>
-                        <td class="py-3 px-4">SD Muhammadiyah</td>
-                        <td class="py-3 px-4">2025-09-19</td>
-                    </tr>
 
                 </tbody>
             </table>

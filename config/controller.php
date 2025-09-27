@@ -154,3 +154,41 @@ function upload_file($file, $folder = "uploads")
 
     return $namaFileBaru; // hanya nama file yg disimpan ke DB
 }
+
+
+
+// Fungsi untuk menghapus data siswa
+function delete_siswa($id)  
+{
+    global $conn;
+
+    // Ambil data file dari database
+    $siswa = select("SELECT bukti, akta, kk FROM data_siswa WHERE id = ?", [$id]);
+    if (empty($siswa)) {
+        return 0; // Data tidak ditemukan
+    }
+
+    $bukti = $siswa[0]['bukti'];
+    $akta  = $siswa[0]['akta'];
+    $kk    = $siswa[0]['kk'];
+
+    // Hapus file dari server
+    if ($bukti && file_exists("uploads/bukti/" . $bukti)) {
+        unlink("uploads/bukti/" . $bukti);
+    }
+    if ($akta && file_exists("uploads/akta/" . $akta)) {
+        unlink("uploads/akta/" . $akta);
+    }
+    if ($kk && file_exists("uploads/kk/" . $kk)) {
+        unlink("uploads/kk/" . $kk);
+    }
+
+    // Hapus data dari database
+    $stmt = $conn->prepare("DELETE FROM data_siswa WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    if ($stmt->execute()) {
+        return $stmt->affected_rows;
+    } else {
+        die("Execute failed: " . $stmt->error);
+    }
+}
