@@ -48,15 +48,6 @@ $data_siswa = select("SELECT * FROM data_siswa
 <body class="bg-gray-100 dark:bg-gray-900 min-h-screen p-6">
   <div class="max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
 
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-      <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Data Siswa Terdaftar</h1>
-      <a href="dashboard.php"
-        class="mt-3 sm:mt-0 inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition">
-        ← Kembali ke Dashboard
-      </a>
-    </div>
-
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
       <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Data Siswa Terdaftar</h1>
       <div class="flex gap-2 mt-3 sm:mt-0">
