@@ -1,9 +1,9 @@
-<?php 
+<?php
 session_start();
 if (
-    !isset($_SESSION["login"]) 
-    && $_SESSION["identit4s"] !== "super4admin" 
-    && $_SESSION["identit4s"] !== "admin7&"
+    !isset($_SESSION["login"])
+    && $_SESSION["identit4s"] !== "super4admin"
+    && $_SESSION["identit4s"] !== "admin1!" // wawancara
 ) {
     echo "<script>
         alert('Akses Hanya untuk Tim Wawancara');
@@ -12,9 +12,7 @@ if (
     exit;
 }
 
-
-
-
+// data siswa yang terdaftar 
 
 ?>
 
@@ -52,14 +50,12 @@ if (
                 <select name="nama_siswa" required
                     class="w-full border border-yellow-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 dark:bg-yellow-800 dark:border-yellow-700 dark:text-white">
                     <option value="">-- Pilih Siswa --</option>
-                    <option value="Ahmad Fauzi">Ahmad Fauzi</option>
-                    <option value="Budi Santoso">Budi Santoso</option>
-                    <option value="Citra Dewi">Citra Dewi</option>
+
                 </select>
             </div>
 
             <!-- Data Orang Tua -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-semibold text-yellow-800 dark:text-yellow-100 mb-2">Nama Ayah *</label>
                     <input type="text" name="nama_ayah" required
@@ -80,10 +76,10 @@ if (
                     <input type="text" name="pekerjaan_ibu"
                         class="w-full border border-yellow-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 dark:bg-yellow-800 dark:border-yellow-700 dark:text-white">
                 </div>
-            </div>
+            </div> -->
 
             <!-- Pendidikan Orang Tua -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-semibold text-yellow-800 dark:text-yellow-100 mb-2">Pendidikan Ayah</label>
                     <select name="pendidikan_ayah"
@@ -112,7 +108,7 @@ if (
                         <option value="Doktor">Doktor</option>
                     </select>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Pertanyaan Wawancara -->
             <div>
@@ -139,6 +135,33 @@ if (
                     class="w-full border border-yellow-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 dark:bg-yellow-800 dark:border-yellow-700 dark:text-white"></textarea>
             </div>
 
+            <!-- Custom Multi Select: Bidang Terkait -->
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-yellow-800 dark:text-yellow-100 mb-2">
+                    Bidang Terkait *
+                </label>
+                <div class="relative">
+                    <!-- Input sebagai trigger -->
+                    <div id="multiSelect"
+                        class="w-full border border-yellow-300 rounded-lg px-3 py-2 bg-white dark:bg-yellow-800 dark:border-yellow-700 dark:text-white cursor-pointer flex flex-wrap gap-2 min-h-[45px]">
+                        <span id="placeholder" class="text-gray-500 dark:text-gray-300">Pilih bidang terkait...</span>
+                    </div>
+
+                    <!-- Dropdown opsi -->
+                    <div id="options"
+                        class="absolute left-0 right-0 mt-1 bg-white dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded-lg shadow-lg hidden z-10">
+                        <div class="p-2 hover:bg-yellow-100 dark:hover:bg-yellow-700 cursor-pointer" data-value="Kurikulum">Kurikulum</div>
+                        <div class="p-2 hover:bg-yellow-100 dark:hover:bg-yellow-700 cursor-pointer" data-value="Qur'an">Qur'an</div>
+                        <div class="p-2 hover:bg-yellow-100 dark:hover:bg-yellow-700 cursor-pointer" data-value="Kesiswaan">Kesiswaan</div>
+                    </div>
+                </div>
+                <!-- Hidden input untuk form -->
+                <input type="hidden" name="bidang" id="selectedValues">
+            </div>
+
+
+
+
             <!-- Kesanggupan -->
             <div>
                 <label class="block text-sm font-semibold text-yellow-800 dark:text-yellow-100 mb-2">Kesanggupan mendukung program sekolah *</label>
@@ -161,6 +184,61 @@ if (
             </div>
         </form>
     </div>
+
+
+
+    <script>
+        const multiSelect = document.getElementById('multiSelect');
+        const options = document.getElementById('options');
+        const placeholder = document.getElementById('placeholder');
+        const selectedValuesInput = document.getElementById('selectedValues');
+
+        let selected = [];
+
+        // Toggle dropdown
+        multiSelect.addEventListener('click', () => {
+            options.classList.toggle('hidden');
+        });
+
+        // Pilih opsi
+        options.querySelectorAll('div').forEach(option => {
+            option.addEventListener('click', () => {
+                const value = option.getAttribute('data-value');
+                if (!selected.includes(value)) {
+                    selected.push(value);
+                    updateSelected();
+                }
+            });
+        });
+
+        // Update tampilan & hidden input
+        function updateSelected() {
+            multiSelect.innerHTML = '';
+            selected.forEach(val => {
+                const tag = document.createElement('span');
+                tag.className = 'bg-yellow-200 text-yellow-900 px-2 py-1 rounded-lg text-sm flex items-center gap-1';
+                tag.innerHTML = `${val} <button type="button" class="ml-1 text-red-600 font-bold" onclick="removeValue('${val}')">×</button>`;
+                multiSelect.appendChild(tag);
+            });
+            if (selected.length === 0) {
+                multiSelect.appendChild(placeholder);
+            }
+            selectedValuesInput.value = selected.join(',');
+        }
+
+        // Hapus pilihan
+        function removeValue(val) {
+            selected = selected.filter(v => v !== val);
+            updateSelected();
+        }
+
+        // Klik di luar menutup dropdown
+        document.addEventListener('click', (e) => {
+            if (!multiSelect.contains(e.target) && !options.contains(e.target)) {
+                options.classList.add('hidden');
+            }
+        });
+    </script>
 
 </body>
 

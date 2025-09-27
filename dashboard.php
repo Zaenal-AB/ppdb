@@ -158,7 +158,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
       class="bg-pink-100 dark:bg-pink-900 rounded-2xl shadow-lg p-6 flex flex-col items-center justify-center text-center hover:scale-105 transition">
       <i data-lucide="edit-3" class="w-10 h-10 mb-3 text-pink-700 dark:text-pink-200"></i>
       <h2 class="text-base font-bold text-pink-700 dark:text-pink-200 mb-2">Daftar Ulang</h2>
-      <p class="text-gray-600 dark:text-gray-300 mb-3">Menu Bendahara mengupdate Data Daftar Ulang (dlm mengembangan)</p>
+      <p class="text-gray-600 dark:text-gray-300 mb-3">Menu Bendahara mengupdate Data Daftar Ulang</p>
       <a href="daftar_ulang.php"
         class="inline-block bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg transition">
         Masuk Daftar Ulang
@@ -171,7 +171,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
       <i data-lucide="megaphone" class="w-10 h-10 mb-3 text-orange-700 dark:text-orange-200"></i>
       <h2 class="text-base font-bold text-orange-700 dark:text-orange-200 mb-2">Pengumuman</h2>
       <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk melihat hasil pengumuman (dlm mengembangan)</p>
-      <a href="pengumuman.php"
+      <a href="#"
         class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition">
         Lihat Pengumuman
       </a>

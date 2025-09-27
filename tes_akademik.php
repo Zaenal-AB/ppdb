@@ -1,15 +1,15 @@
 <?php
 session_start();
 if (
-    !isset($_SESSION["login"]) 
-    && $_SESSION["identit4s"] !== "super4admin" 
-    && $_SESSION["identit4s"] !== "admin5%"
+  !isset($_SESSION["login"])
+  && $_SESSION["identit4s"] !== "super4admin"
+  && $_SESSION["identit4s"] !== "admin5%" // akademik
 ) {
-    echo "<script>
+  echo "<script>
         alert('Akses Hanya untuk Tim Penguji Akademik');
         document.location.href = 'dashboard.php';
     </script>";
-    exit;
+  exit;
 }
 
 
@@ -58,9 +58,9 @@ $data_siswa_belum_tes = select("SELECT * FROM data_siswa
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-indigo-300 min-h-screen flex items-center justify-center p-6">
+<body class="bg-indigo-200 min-h-screen flex items-center justify-center p-6">
   <div class="w-[100%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-white rounded-xl shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-center mb-6 text-blue-700">
+    <h2 class="text-2xl font-bold text-center mb-6 text-indigo-700">
       Form Rekapan Tes Akademik
     </h2>
 
@@ -70,7 +70,7 @@ $data_siswa_belum_tes = select("SELECT * FROM data_siswa
         <label class="block text-sm font-semibold mb-2">Nama Siswa</label>
         <select
           name="siswa_id"
-          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
+          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500"
           required>
           <option value="" disabled selected>Pilih Siswa</option>
           <?php foreach ($data_siswa_belum_tes as $siswa) : ?>
@@ -81,13 +81,24 @@ $data_siswa_belum_tes = select("SELECT * FROM data_siswa
         </select>
       </div>
 
+      <!-- Tanggal Tes -->
+      <div>
+        <label class="block text-sm font-semibold mb-2">Tanggal Tes</label>
+        <input
+          type="date"
+          name="tanggal_tes_akademik"
+          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500"
+          required />
+      </div>
+
+
       <!-- Deskripsi -->
       <div>
         <label class="block text-sm font-semibold mb-2">Deskripsi</label>
         <textarea
           name="deskripsi"
           rows="4"
-          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500"
+          class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500"
           placeholder="Masukkan deskripsi hasil tes akademik..."
           required></textarea>
       </div>
@@ -96,7 +107,7 @@ $data_siswa_belum_tes = select("SELECT * FROM data_siswa
       <div class="text-center">
         <button
           type="submit"
-          class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+          class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">
           Simpan Rekapan
         </button>
       </div>
