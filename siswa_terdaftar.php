@@ -57,6 +57,21 @@ $data_siswa = select("SELECT * FROM data_siswa
       </a>
     </div>
 
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+      <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Data Siswa Terdaftar</h1>
+      <div class="flex gap-2 mt-3 sm:mt-0">
+        <a href="dashboard.php"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition">
+          ← Kembali ke Dashboard
+        </a>
+        <a href="#"
+          class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition">
+          ⬇ Download Excel
+        </a>
+      </div>
+    </div>
+
+
     <!-- Table Responsive -->
     <div class="overflow-x-auto">
       <table class="w-full border-collapse">
@@ -87,8 +102,8 @@ $data_siswa = select("SELECT * FROM data_siswa
                     class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-1 px-3 rounded-lg transition">
                     Detail
                   </a>
-                  <button 
-                    onclick="openModal(<?= $siswa['id']; ?>, '<?= htmlspecialchars($siswa['nama_lengkap']); ?>')" 
+                  <button
+                    onclick="openModal(<?= $siswa['id']; ?>, '<?= htmlspecialchars($siswa['nama_lengkap']); ?>')"
                     class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-1 px-3 rounded-lg transition">
                     Hapus
                   </button>
