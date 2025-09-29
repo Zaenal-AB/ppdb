@@ -38,9 +38,9 @@ $data_siswa_sudah_tes = select("SELECT * FROM data_siswa
                       ORDER BY id ASC");
 
 $data_siswa_du = select("SELECT * FROM data_siswa 
-                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                        WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
                         AND daftar_ulang = 1
-                      ORDER BY id ASC");
+                        ORDER BY id ASC");
 
 // <------------ END CONTROLLER -------------->
 ?>
@@ -92,9 +92,9 @@ $data_siswa_du = select("SELECT * FROM data_siswa
                                     <td class="py-3 px-4"><?= $no++; ?></td>
                                     <td class="py-3 px-4"><?= htmlspecialchars($siswa['nama_lengkap']); ?></td>
                                     <td class="py-3 px-4"><?= htmlspecialchars($siswa['jenis_kelamin']); ?></td>
-                                    <td class="py-3 px-4"><?= htmlspecialchars($siswa['asal_sekolah']); ?></td>
+                                    <td class="py-3 px-4"><?= htmlspecialchars($siswa['sekolah_asal']); ?></td>
                                     <td class="py-3 px-4">
-                                        <?= date('d M Y', strtotime($siswa['tanggal_daftar_ulang'])); ?>
+                                        <?= date('d M Y', strtotime($siswa['tanggal_du'])); ?>
                                     </td>
                                 </tr>
                             <?php endif; ?>

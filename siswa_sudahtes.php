@@ -33,8 +33,9 @@ if ($month >= 9) { // September - Desember
 // Ambil data siswa sesuai periode PPDB
 $data_siswa = select("SELECT * FROM data_siswa 
                       WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
-                      AND tes_akademik = 'Sudah' 
-                      AND tes_quran = 'Sudah'
+                      OR tes_akademik = 'Sudah' 
+                      OR tes_quran = 'Sudah'
+                      AND daftar_ulang != 1
                       ORDER BY id ASC");
 
 

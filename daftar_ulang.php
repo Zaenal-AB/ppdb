@@ -15,7 +15,11 @@ if (
 include 'config/app.php';
 
 // ambil siswa yang belum daftar ulang
-$data_siswa_sudah_tes = select("SELECT * FROM data_siswa WHERE tes_akademik = 'Sudah' AND tes_quran = 'Sudah' ORDER BY nama_lengkap ASC");
+$data_siswa_sudah_tes = select("SELECT * FROM data_siswa 
+                        WHERE tes_akademik = 'Sudah' 
+                        AND tes_quran = 'Sudah'
+                        AND pengumuman = 'Diterima' 
+                        ORDER BY nama_lengkap ASC");
 
 
 ?>
@@ -56,7 +60,7 @@ $data_siswa_sudah_tes = select("SELECT * FROM data_siswa WHERE tes_akademik = 'S
                 <label class="block text-sm font-semibold mb-2">Tanggal Daftar Ulang</label>
                 <input
                     type="date"
-                    name="tanggal_tes_akademik"
+                    name="tanggal_du"
                     class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-teal-500"
                     required />
             </div>

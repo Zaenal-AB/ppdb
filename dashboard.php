@@ -44,6 +44,12 @@ $data_siswa_sudah_tes = select("SELECT * FROM data_siswa
                       WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
                       AND tes_akademik = 'Sudah' 
                       AND tes_quran = 'Sudah'
+                      AND daftar_ulang != 1
+                      ORDER BY id ASC");
+
+$data_siswa_du = select("SELECT * FROM data_siswa 
+                      WHERE created_at BETWEEN '$periode_awal' AND '$periode_akhir'
+                      AND daftar_ulang = 1
                       ORDER BY id ASC");
 
 
@@ -53,7 +59,7 @@ $data_siswa_sudah_tes = select("SELECT * FROM data_siswa
 $total_sudah_daftar = count($data_siswa); // semua siswa
 $total_belum_tes    = count($data_siswa_belum_tes);
 $total_sudah_tes    = count($data_siswa_sudah_tes);
-// $total_daftar_ulang = count(select("SELECT * FROM data_siswa WHERE daftar_ulang=1"));
+$total_daftar_du = count($data_siswa_du);
 
 
 
@@ -111,7 +117,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
           class="group bg-green-100 dark:bg-green-900 rounded-lg shadow p-4 text-center hover:scale-105 transition">
           <i data-lucide="refresh-ccw" class="w-6 h-6 mx-auto mb-2 text-green-700 dark:text-green-200"></i>
           <h3 class="text-sm font-bold text-green-700 dark:text-green-200">Sudah Daftar Ulang</h3>
-          <p class="text-lg font-semibold text-green-800 dark:text-green-100">0</p>
+          <p class="text-lg font-semibold text-green-800 dark:text-green-100"><?= $total_daftar_du  ?></p>
         </a>
 
       </div>
@@ -123,7 +129,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
       <i data-lucide="mic" class="w-10 h-10 mb-3 text-yellow-700 dark:text-yellow-200"></i>
       <h2 class="text-base font-bold text-yellow-700 dark:text-yellow-200 mb-2">Wawancara</h2>
       <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk masuk ke sesi wawancara</p>
-      <a href="wawancara.php"
+      <a target="_blank" href="wawancara.php"
         class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition">
         Masuk Wawancara
       </a>
@@ -135,7 +141,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
       <i data-lucide="book-open" class="w-10 h-10 mb-3 text-indigo-700 dark:text-indigo-200"></i>
       <h2 class="text-base font-bold text-indigo-700 dark:text-indigo-200 mb-2">Tes Akademik</h2>
       <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk masuk ke tes akademik</p>
-      <a href="tes_akademik.php"
+      <a target="_blank" href="tes_akademik.php"
         class="inline-block bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition">
         Masuk Tes Akademik
       </a>
@@ -147,7 +153,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
       <i data-lucide="book" class="w-10 h-10 mb-3 text-teal-700 dark:text-teal-200"></i>
       <h2 class="text-base font-bold text-teal-700 dark:text-teal-200 mb-2">Tes Al-Qur'an</h2>
       <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk masuk ke tes Al-Qur'an</p>
-      <a href="tes_quran.php"
+      <a target="_blank" href="tes_quran.php"
         class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg transition">
         Masuk Tes Al-Qur'an
       </a>
@@ -159,7 +165,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
       <i data-lucide="edit-3" class="w-10 h-10 mb-3 text-pink-700 dark:text-pink-200"></i>
       <h2 class="text-base font-bold text-pink-700 dark:text-pink-200 mb-2">Daftar Ulang</h2>
       <p class="text-gray-600 dark:text-gray-300 mb-3">Menu Bendahara mengupdate Data Daftar Ulang</p>
-      <a href="daftar_ulang.php"
+      <a target="_blank" href="daftar_ulang.php"
         class="inline-block bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg transition">
         Masuk Daftar Ulang
       </a>
@@ -171,7 +177,7 @@ $total_sudah_tes    = count($data_siswa_sudah_tes);
       <i data-lucide="megaphone" class="w-10 h-10 mb-3 text-orange-700 dark:text-orange-200"></i>
       <h2 class="text-base font-bold text-orange-700 dark:text-orange-200 mb-2">Pengumuman</h2>
       <p class="text-gray-600 dark:text-gray-300 mb-3">Klik untuk melihat hasil pengumuman (dlm mengembangan)</p>
-      <a href="#"
+      <a target="_blank" href="#"
         class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg transition">
         Lihat Pengumuman
       </a>

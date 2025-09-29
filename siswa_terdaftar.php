@@ -72,6 +72,7 @@ $data_siswa = select("SELECT * FROM data_siswa
             <th class="py-3 px-4 text-left">Nama</th>
             <th class="py-3 px-4 text-left">Jenis Kelamin</th>
             <th class="py-3 px-4 text-left">Asal Sekolah</th>
+            <th class="py-3 px-4 text-left">Status Pendaftarn</th>
             <th class="py-3 px-4 text-left">Tanggal Daftar</th>
             <?php if ($_SESSION['identit4s'] == "admin4$" || $_SESSION['identit4s'] == "super4admin") : ?>
               <th class="py-3 px-4 text-center">Aksi</th>
@@ -86,6 +87,19 @@ $data_siswa = select("SELECT * FROM data_siswa
               <td class="py-3 px-4"><?= htmlspecialchars($siswa['nama_lengkap']); ?></td>
               <td class="py-3 px-4"><?= htmlspecialchars($siswa['jenis_kelamin']); ?></td>
               <td class="py-3 px-4"><?= htmlspecialchars($siswa['sekolah_asal']); ?></td>
+              <!-- tabel data tatus pendaftaran: terdaftar/belum tes/sudah tes/sudah daftar ulang -->
+              <td class="py-3 px-4">
+                <?php
+                if ($siswa['tes_akademik'] == 'Belum' || $siswa['tes_quran'] == 'Belum') {
+                  echo '<span class="px-2 py-1 bg-yellow-200 text-yellow-800 rounded-full text-xs font-semibold">Belum Tes</span>';
+                } elseif ($siswa['tes_akademik'] == 'Sudah' && $siswa['tes_quran'] == 'Sudah' && $siswa['daftar_ulang'] == 0) {
+                  echo '<span class="px-2 py-1 bg-blue-200 text-blue-800 rounded-full text-xs font-semibold">Sudah Tes</span>';
+                } elseif ($siswa['daftar_ulang'] == 1) {
+                  echo '<span class="px-2 py-1 bg-green-200 text-green-800 rounded-full text-xs font-semibold">Sudah Daftar Ulang</span>';
+                } else {
+                  echo '<span class="px-2 py-1 bg-gray-200 text-gray-800 rounded-full text-xs font-semibold">Terdaftar</span>';
+                }
+                ?>
               <td class="py-3 px-4"><?= date('d-m-Y H:i', strtotime($siswa['created_at'])); ?></td>
               <?php if ($_SESSION['identit4s'] == "admin4$" || $_SESSION['identit4s'] == "super4admin") : ?>
                 <td class="py-3 px-4 text-center flex gap-2 justify-center">
