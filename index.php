@@ -400,7 +400,7 @@ if (isset($_POST['tambah'])) {
             <div>
               <h2
                 class="text-xl font-bold mb-4 text-blue-700 underline underline-offset-1">
-                Mendapatkan informasi PPDB dari mana? *
+                Mendapat informasi SPMB dari mana? *
               </h2>
               <p class="mb-1">
                 Pilih salah satu sumber informasi di bawah ini:
@@ -429,6 +429,14 @@ if (isset($_POST['tambah'])) {
                   value="Brosur"
                   class="text-blue-600 focus:ring-blue-500" />
                 <span>Brosur / Spanduk</span>
+              </label>
+              <label class="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="sumber_info"
+                  value="Guru"
+                  class="text-blue-600 focus:ring-blue-500" />
+                <span>Guru SMPIT Anak Sholeh Mataram</span>
               </label>
               <label class="flex items-center gap-2">
                 <input
@@ -468,7 +476,7 @@ if (isset($_POST['tambah'])) {
               <!-- Upload Bukti Pendaftaran -->
               <h2
                 class="text-xl font-bold mb-4 text-blue-700 underline underline-offset-1">
-                Upload Bukti Pendaftaran*
+                Upload Bukti Pembayaran Pendaftaran*
               </h2>
               <input
                 type="file"
