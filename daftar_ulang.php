@@ -1,12 +1,13 @@
 <?php
 session_start();
-if (
-    !isset($_SESSION["login"])
-    && $_SESSION["identit4s"] !== "super4admin"
-    && $_SESSION["identit4s"] !== "bendahara31#" // bendahara
-) {
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+if (!in_array($_SESSION["identit4s"], ["super4admin", "admin31#"])) {
     echo "<script>
-        alert('Akses Hanya untuk Tim Wawancara');
+        alert('Akses Hanya untuk Bendahara');
         document.location.href = 'dashboard.php';
     </script>";
     exit;

@@ -1,12 +1,14 @@
 <?php
 session_start();
-if (
-    !isset($_SESSION["login"])
-    && $_SESSION["identit4s"] !== "super4admin"
-    && $_SESSION["identit4s"] !== "admin7&" // quran
-) {
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+if (!in_array($_SESSION["identit4s"], ["super4admin", "admin7&"])) {
     echo "<script>
-        alert('Akses Hanya untuk Tim Penguji Al-Qur\\'an.');
+        alert('Akses Hanya untuk Tim Penguji Al-Quran');
         document.location.href = 'dashboard.php';
     </script>";
     exit;

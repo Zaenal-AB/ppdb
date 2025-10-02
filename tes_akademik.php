@@ -1,17 +1,18 @@
 <?php
 session_start();
-if (
-  !isset($_SESSION["login"])
-  && $_SESSION["identit4s"] !== "super4admin"
-  && $_SESSION["identit4s"] !== "admin5%" // akademik
-) {
-  echo "<script>
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+if (!in_array($_SESSION["identit4s"], ["super4admin", "admin5%"])) {
+    echo "<script>
         alert('Akses Hanya untuk Tim Penguji Akademik');
         document.location.href = 'dashboard.php';
     </script>";
-  exit;
+    exit;
 }
-
 
 include 'config/app.php';
 
